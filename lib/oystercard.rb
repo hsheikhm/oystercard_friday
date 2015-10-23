@@ -13,4 +13,8 @@ class Oystercard
     (bal + amount > MAX_BAL) ? (raise TOP_UP_ERROR) : (@bal += amount)
   end
 
+  def deduct(amount)
+    @bal -= amount
+  end
+
 end

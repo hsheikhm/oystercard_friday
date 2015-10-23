@@ -19,6 +19,12 @@ describe Oystercard do
     it 'raises error if #top_up more than max bal' do
       expect{card.top_up(max_bal + 1)}.to raise_error top_up_error
     end
+  end
+
+  context '#deduct' do
+    it 'reduces #@bal' do
+      expect{card.deduct(1)}.to change{card.bal}.by(-1)
+    end
 
   end
 
