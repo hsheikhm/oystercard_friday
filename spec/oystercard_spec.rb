@@ -1,6 +1,7 @@
 require 'oystercard'
 
 describe Oystercard do
+
   subject(:card) { described_class.new }
   let(:max_bal) { described_class::MAX_BAL }
   let(:min_fare) { described_class::MIN_FARE }
@@ -26,18 +27,24 @@ describe Oystercard do
   context '#touch_in' do
     it 'makes #in_jrny? return true' do
       card.top_up(10)
-      card.touch_in
+      card.touch_in(:stn)
       expect(card).to be_in_jrny
     end
 
     it 'raises error if #@bal is lower than #MIN_FARE' do
-      expect{card.touch_in}.to raise_error min_fare_error
+      expect{card.touch_in(:stn)}.to raise_error min_fare_error
+    end
+
+    it 'stores the entry station' do
+      card.top_up(10)
+      card.touch_in(:stn)
+      expect(card.entry_stn).to eq :stn
     end
 
   end
 
   context '#touch_out' do
-    before { card.top_up(min_fare); card.touch_in; }
+    before { card.top_up(min_fare); card.touch_in(:stn); }
     it 'makes @in_jrny? return false' do
       card.touch_out
       expect(card).not_to be_in_jrny

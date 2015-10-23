@@ -1,6 +1,6 @@
 class Oystercard
 
-  attr_reader :bal
+  attr_reader :bal, :entry_stn
 
   START_BAL = 0
   MAX_BAL = 90
@@ -17,9 +17,10 @@ class Oystercard
     (bal + amount > MAX_BAL) ? (raise TOP_UP_ERROR) : (@bal += amount)
   end
 
-  def touch_in
+  def touch_in(stn)
     raise MIN_FARE_ERROR if @bal < MIN_FARE
     @in_use = true
+    @entry_stn = stn
   end
 
   def touch_out
