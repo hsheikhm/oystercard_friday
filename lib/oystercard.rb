@@ -1,6 +1,6 @@
 class Oystercard
 
-  attr_reader :bal, :entry_stn
+  attr_reader :bal, :entry_stn, :trips
 
   START_BAL = 0
   MAX_BAL = 90
@@ -11,6 +11,7 @@ class Oystercard
   def initialize
     @bal = START_BAL
     @in_use = false
+    @trips = []
   end
 
   def top_up(amount)
@@ -23,9 +24,10 @@ class Oystercard
     @entry_stn = stn
   end
 
-  def touch_out
+  def touch_out(exit_stn)
     @in_use = false
     deduct(MIN_FARE)
+    @trips << { @entry_stn => exit_stn }
   end
 
   def in_jrny?

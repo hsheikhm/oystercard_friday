@@ -44,14 +44,20 @@ describe Oystercard do
   end
 
   context '#touch_out' do
-    before { card.top_up(min_fare); card.touch_in(:stn); }
+    before { card.top_up(min_fare); card.touch_in(:entry_stn); }
     it 'makes @in_jrny? return false' do
-      card.touch_out
+      card.touch_out(:exit_stn)
       expect(card).not_to be_in_jrny
     end
 
     it 'deducts the minimum fare from #@bal' do
-      expect{card.touch_out}.to change{card.bal}.by(-min_fare)
+      expect{card.touch_out(:exit_stn)}.to change{card.bal}.by(-min_fare)
+    end
+
+    it 'stores a trip' do
+      trip = { :entry_stn => :exit_stn }
+      card.touch_out(:exit_stn)
+      expect(card.trips).to include(trip)
     end
   end
 
