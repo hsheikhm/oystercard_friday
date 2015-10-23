@@ -2,7 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
   subject(:card) { described_class.new }
-  let(:max_bal) { described_class::MAX_BAL}
+  let(:max_bal) { described_class::MAX_BAL }
+  let(:min_fare) { described_class::MIN_FARE }
   let(:top_up_error) { described_class::TOP_UP_ERROR }
   let(:min_fare_error) { described_class::MIN_FARE_ERROR }
 
@@ -42,11 +43,14 @@ describe Oystercard do
   end
 
   context '#touch_out' do
+    before { card.top_up(min_fare); card.touch_in; }
     it 'makes @in_jrny? return false' do
-      card.top_up(10)
-      card.touch_in
       card.touch_out
       expect(card).not_to be_in_jrny
+    end
+
+    it 'deducts the minimum fare from #@bal' do
+      expect{card.touch_out}.to change{card.bal}.by(-min_fare)
     end
   end
 
