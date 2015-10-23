@@ -7,4 +7,8 @@ class Oystercard
     @bal = START_BAL
   end
 
+  def top_up(amount)
+    @bal += amount
+  end
+
 end
