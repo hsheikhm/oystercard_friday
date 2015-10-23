@@ -23,12 +23,6 @@ describe Oystercard do
     end
   end
 
-  context '#deduct' do
-    it 'reduces #@bal' do
-      expect{card.deduct(1)}.to change{card.bal}.by(-1)
-    end
-  end
-
   context '#touch_in' do
     it 'makes #in_jrny? return true' do
       card.top_up(10)

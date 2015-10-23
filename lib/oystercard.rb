@@ -31,6 +31,8 @@ class Oystercard
     @in_use
   end
 
+  private
+
   def deduct(amount)
     @bal -= amount
   end
