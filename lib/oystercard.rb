@@ -1,9 +1,12 @@
 class Oystercard
+
   attr_reader :bal
 
   START_BAL = 0
   MAX_BAL = 90
+  MIN_FARE = 1
   TOP_UP_ERROR = "Limit exceeded, maximum balance is £#{MAX_BAL}"
+  MIN_FARE_ERROR = "Balance insufficient, minimum fare is £#{MIN_FARE} "
 
   def initialize
     @bal = START_BAL
@@ -15,6 +18,7 @@ class Oystercard
   end
 
   def touch_in
+    raise MIN_FARE_ERROR if @bal < MIN_FARE
     @in_use = true
   end
 
