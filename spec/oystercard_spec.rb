@@ -28,4 +28,19 @@ describe Oystercard do
 
   end
 
+  context '#touch_in' do
+    it 'makes #in_jrny? return true' do
+      card.touch_in
+      expect(card).to be_in_jrny
+    end
+  end
+
+  context '#touch_out' do
+    it 'makes @in_jrny? return false' do
+      card.touch_in
+      card.touch_out
+      expect(card).not_to be_in_jrny
+    end
+  end
+
 end

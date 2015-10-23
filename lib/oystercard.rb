@@ -7,10 +7,23 @@ class Oystercard
 
   def initialize
     @bal = START_BAL
+    @in_use = false
   end
 
   def top_up(amount)
     (bal + amount > MAX_BAL) ? (raise TOP_UP_ERROR) : (@bal += amount)
+  end
+
+  def touch_in
+    @in_use = true
+  end
+
+  def touch_out
+    @in_use = false
+  end
+
+  def in_jrny?
+    @in_use
   end
 
   def deduct(amount)
